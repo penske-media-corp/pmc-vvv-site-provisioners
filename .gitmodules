@@ -1,0 +1,3 @@
+[submodule "provision/default"]
+	path = provision/default
+	url = git@github.com:Varying-Vagrant-Vagrants/custom-site-template.git
