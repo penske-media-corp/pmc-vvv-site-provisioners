@@ -27,7 +27,7 @@ function pmc_git_dir_install_or_update() {
         [ -z "$(git -c core.fileMode=false status --porcelain)" ] && \
         [ "$(git remote show origin | grep 'HEAD branch' | sed 's/.*: //')" == "$(git rev-parse --abbrev-ref HEAD)" ] \
       ; then
-        noroot git pull --quiet --ff-only
+        noroot git -c core.fileMode=false pull --quiet --ff-only
       else
         echo "Not updating ${SHORT_NAME}, it either isn't on the default branch, or local changes were detected"
       fi
