@@ -1,16 +1,22 @@
 <?php
 /**
- * Helpers for local development.
+ * Allow themes to load code as part of `mu-plugins`, such as when access to the
+ * `plugins_loaded` hook is required.
  *
- * This file may be installed before `mu-plugins` or any PMC code is added to
- * the WordPress instance, so care should be taken to prevent fatal errors when
- * code isn't yet available.
+ * Borrows VIP Go's logic for loading `client-mu-plugins` from
+ * `mu-plugins/z-client-mu-plugins.php`, which is what loads this file in the
+ * first place.
  */
 
-// Ensure AMP is loaded when available, lest fatals stop provisioning.
-if (
-	function_exists( 'wpcom_vip_load_plugin' )
-	&& is_dir( WP_PLUGIN_DIR . '/amp/' )
-) {
-	wpcom_vip_load_plugin( 'amp' );
+// Cannot use `STYLESHEETPATH` as it isn't set yet.
+$theme_plugins_path = get_stylesheet_directory() . '/client-mu-plugins/';
+
+if ( wpcom_vip_should_load_plugins() && is_dir( $theme_plugins_path ) ) {
+	foreach ( wpcom_vip_get_client_mu_plugins( $theme_plugins_path ) as $client_mu_plugin ) {
+		include_once $client_mu_plugin;
+	}
+
+	unset( $client_mu_plugin );
 }
+
+unset( $theme_plugins_path );
