@@ -8,15 +8,17 @@
  * first place.
  */
 
-// Cannot use `STYLESHEETPATH` as it isn't set yet.
-$theme_plugins_path = get_stylesheet_directory() . '/client-mu-plugins/';
+// Wrap in MU Plugins loaded so pmc-unit-tests has a chance to set the correct theme.
+add_action( 'muplugins_loaded', function() {
+	$theme_plugins_path = get_stylesheet_directory() . '/client-mu-plugins/';
 
-if ( wpcom_vip_should_load_plugins() && is_dir( $theme_plugins_path ) ) {
-	foreach ( wpcom_vip_get_client_mu_plugins( $theme_plugins_path ) as $client_mu_plugin ) {
-		include_once $client_mu_plugin;
+	if ( wpcom_vip_should_load_plugins() && is_dir( $theme_plugins_path ) ) {
+		foreach ( wpcom_vip_get_client_mu_plugins( $theme_plugins_path ) as $client_mu_plugin ) {
+			include_once $client_mu_plugin;
+		}
+
+		unset( $client_mu_plugin );
 	}
 
-	unset( $client_mu_plugin );
-}
-
-unset( $theme_plugins_path );
+	unset( $theme_plugins_path );
+} );
