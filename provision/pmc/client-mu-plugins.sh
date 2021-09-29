@@ -9,6 +9,6 @@ LOCAL_DEV_HELPER_PATH="${PUBLIC_DIR_PATH}/wp-content/client-mu-plugins/plugin-lo
 if [ -d "${PUBLIC_DIR_PATH}/wp-content" ] && [ ! -d "${CLIENT_MU_PLUGINS_DIR}" ]; then
   mkdir "${CLIENT_MU_PLUGINS_DIR}"
 fi
-if [ -d "${CLIENT_MU_PLUGINS_DIR}" ] && [ ! -f "${LOCAL_DEV_HELPER_PATH}" ]; then
+if [ -d "${CLIENT_MU_PLUGINS_DIR}" ] ]; then
   cp "${PMC_PROVISION_PATH}/pmc/templates/client-mu-plugins-plugin-loader.php" "${LOCAL_DEV_HELPER_PATH}"
 fi
