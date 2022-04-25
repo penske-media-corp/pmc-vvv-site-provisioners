@@ -1,4 +1,3 @@
-WP_DEBUG: "true"
 WP_DEBUG_DISPLAY: "false"
 WP_DEBUG_LOG: "true"
 SCRIPT_DEBUG: "false"
