@@ -13,5 +13,7 @@ while IFS='' read -r -d '' key &&
     else
       noroot wp config set "${key}" "${value}"
     fi
+    # Enable WP_DEBUG in wp-config.php, already included via VVV's init.
+    noroot wp config set WP_DEBUG true --raw
 done
 set -e
