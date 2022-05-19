@@ -28,12 +28,23 @@ add_action( 'muplugins_loaded', function() {
  * `plugins_loaded` action has already fired, which triggers a
  * _doing_it_wrong() message in our logs. We don't plan on changing our
  * approach here, so mute those notices.
+ *
+ * @param bool   $trigger  Should we log the message?
+ * @param string $function Function name this was called from.
+ * @param string $message  Message that gets logged.
+ * @return bool
  */
-function pmc_mute_wpcom_vip_load_plugin_notice( $trigger, $function, $message ) {
-	$needle = 'as called after the `plugins_loaded` hook. For best results, we recommend loading your plugins earlier from `client-mu-plugins';
-	if ( false !== strpos( $message, $needle ) ) {
-		return false;
+function pmc_mute_wpcom_vip_load_plugin_notice( bool $trigger, string $function, string $message ): bool {
+	// Check the function that fired this.
+	if ( 'wpcom_vip_load_plugin' !== $function ) {
+		return $trigger;
 	}
-	return $trigger;
+
+	// The function has multiple conditionals for _doing_it_wrong(), so ensure we target the correct one.
+	if ( false === strpos( $message, 'plugins_loaded' ) ) {
+		return $trigger;
+	}
+
+	return false;
 }
 add_filter( 'doing_it_wrong_trigger_error', 'pmc_mute_wpcom_vip_load_plugin_notice', 10, 3 );
