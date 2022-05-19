@@ -22,3 +22,18 @@ add_action( 'muplugins_loaded', function() {
 
 	unset( $theme_plugins_path );
 } );
+
+/**
+ * We use wpcom_vip_load_plugin() in contexts that occur after the
+ * `plugins_loaded` action has already fired, which triggers a
+ * _doing_it_wrong() message in our logs. We don't plan on changing our
+ * approach here, so mute those notices.
+ */
+function pmc_mute_wpcom_vip_load_plugin_notice( $trigger, $function, $message ) {
+	$needle = 'as called after the `plugins_loaded` hook. For best results, we recommend loading your plugins earlier from `client-mu-plugins';
+	if ( false !== strpos( $message, $needle ) ) {
+		return false;
+	}
+	return $trigger;
+}
+add_filter( 'doing_it_wrong_trigger_error', 'pmc_mute_wpcom_vip_load_plugin_notice', 10, 3 );
