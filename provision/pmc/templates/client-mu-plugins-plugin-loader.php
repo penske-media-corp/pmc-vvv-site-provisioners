@@ -22,3 +22,29 @@ add_action( 'muplugins_loaded', function() {
 
 	unset( $theme_plugins_path );
 } );
+
+/**
+ * We use wpcom_vip_load_plugin() in contexts that occur after the
+ * `plugins_loaded` action has already fired, which triggers a
+ * _doing_it_wrong() message in our logs. We don't plan on changing our
+ * approach here, so mute those notices.
+ *
+ * @param bool   $trigger  Should we log the message?
+ * @param string $function Function name this was called from.
+ * @param string $message  Message that gets logged.
+ * @return bool
+ */
+function pmc_mute_wpcom_vip_load_plugin_notice( bool $trigger, string $function, string $message ): bool {
+	// Check the function that fired this.
+	if ( 'wpcom_vip_load_plugin' !== $function ) {
+		return $trigger;
+	}
+
+	// The function has multiple conditionals for _doing_it_wrong(), so ensure we target the correct one.
+	if ( false === strpos( $message, 'plugins_loaded' ) ) {
+		return $trigger;
+	}
+
+	return false;
+}
+add_filter( 'doing_it_wrong_trigger_error', 'pmc_mute_wpcom_vip_load_plugin_notice', 10, 3 );
