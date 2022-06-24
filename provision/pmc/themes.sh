@@ -21,7 +21,6 @@ fi
 THEME_REPO=$(get_config_value 'pmc.theme_repo')
 THEME_SLUG=$(get_config_value 'pmc.theme_slug' '')
 PARENT_THEME_SLUG=$(get_config_value 'pmc.parent_theme_slug' '')
-GRANDCHILD_THEME_REPO=$(get_config_value 'pmc.grandchild_theme_repo' '')
 
 if [ -z "$THEME_REPO" ]; then
   echo " * Skipping theme installation as no repo is set."
@@ -47,19 +46,6 @@ if [ -n "$PARENT_THEME_SLUG" ]; then
     "$PARENT_THEME_SLUG" \
     "rsync" \
     "${CORETECH_THEMES_DIR}/${PARENT_THEME_SLUG}/"
-fi
-
-if [ -n "$GRANDCHILD_THEME_REPO" ]; then
-  BASENAME=$(basename "$GRANDCHILD_THEME_REPO")
-  GRANDCHILD_SLUG=${BASENAME%.*}
-
-  pmc_git_dir_install_or_update \
-    "${THEMES_DIR}/${GRANDCHILD_SLUG}" \
-    "$GRANDCHILD_SLUG" \
-    "git" \
-    "$GRANDCHILD_THEME_REPO"
-
-  noroot wp config set "PMC_THEME_INTERNATIONAL_OVERRIDE_PATH" "$GRANDCHILD_DIR"
 fi
 
 # Activate theme when necessary.
