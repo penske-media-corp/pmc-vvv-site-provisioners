@@ -20,6 +20,10 @@ vvv_info "   > Installing WordPress"
 vvv_info "   > Double-checking client-mu-plugins"
 . "${PMC_PROVISION_PATH}/pmc/client-mu-plugins.sh"
 
+# Ensure VIP Go's pre-config requirements are loaded.
+vvv_info "   > Adding necessary modifications to wp-config.php"
+. "${PMC_PROVISION_PATH}/pmc/wp-config-mods.sh"
+
 # Update URL to be HTTPS.
 noroot wp --skip-plugins --skip-themes option set home "https://${DOMAIN}/"
 noroot wp --skip-plugins --skip-themes option set siteurl "https://${DOMAIN}/"
