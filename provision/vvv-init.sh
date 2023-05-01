@@ -30,8 +30,11 @@ noroot wp --skip-plugins --skip-themes option set siteurl "https://${DOMAIN}/"
 
 # Apply PMC customizations.
 vvv_info "   > Installing PMC plugins and theme(s)"
+vvv_info "   > Executing constants.sh"
 . "${PMC_PROVISION_PATH}/pmc/constants.sh"
+vvv_info "   > Executing plugins.sh"
 . "${PMC_PROVISION_PATH}/pmc/plugins.sh"
+vvv_info "   > Executing themes.sh"
 . "${PMC_PROVISION_PATH}/pmc/themes.sh"
 
 noroot wp --skip-plugins --skip-themes cache flush

@@ -3,7 +3,7 @@
 DIRPATH="${PMC_PROVISION_PATH}/pmc"
 WP_CONTENT_DIR="${PUBLIC_DIR_PATH}/wp-content"
 
-echo " * Removing unneeded plugin files included with Core"
+vvv_info " * Removing unneeded plugin files included with Core"
 PLUGINS_TO_REMOVE="akismet/
 hello.php
 index.php"

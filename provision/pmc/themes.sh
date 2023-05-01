@@ -3,7 +3,7 @@
 THEMES_DIR="${PUBLIC_DIR_PATH}/wp-content/themes"
 CORETECH_THEMES_DIR="/tmp/pmc-coretech/themes"
 
-echo " * Removing default themes"
+vvv_info " * Removing default themes"
 rm -rf "${THEMES_DIR}/index.php"
 find "${THEMES_DIR}" -type d -name "twenty*" -prune -exec rm -rf {} \;
 
@@ -23,7 +23,7 @@ THEME_SLUG=$(get_config_value 'pmc.theme_slug' '')
 PARENT_THEME_SLUG=$(get_config_value 'pmc.parent_theme_slug' '')
 
 if [ -z "$THEME_REPO" ]; then
-  echo " * Skipping theme installation as no repo is set."
+  vvv_info " * Skipping theme installation as no repo is set."
   return
 fi
 
