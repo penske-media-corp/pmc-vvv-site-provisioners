@@ -25,7 +25,7 @@ while IFS='' read -r -d '' key &&
 done
 set -e
 
-OBJECT_CACHE_PATH="mu-plugins/drop-ins/object-cache/object-cache-stable.php"
+OBJECT_CACHE_PATH="mu-plugins/drop-ins/object-cache.php"
 OBJECT_CACHE_DEST="${WP_CONTENT_DIR}/object-cache.php"
 if [ -f "${WP_CONTENT_DIR}/${OBJECT_CACHE_PATH}" ]; then
   rm "${OBJECT_CACHE_DEST}"
