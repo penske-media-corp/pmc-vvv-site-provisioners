@@ -8,17 +8,9 @@ source "${PMC_PROVISION_PATH}/pmc/functions.sh"
 
 vvv_info " * PMC site provisioner ${VVV_SITE_NAME}"
 
-# Create client-mu-plugins helper, when possible.
-vvv_info "   > Preparing client-mu-plugins"
-. "${PMC_PROVISION_PATH}/pmc/client-mu-plugins.sh"
-
 # Run default provisioner.
 vvv_info "   > Installing WordPress"
 . "${PMC_PROVISION_PATH}/default/provision/vvv-init.sh"
-
-# Confirm presence of client-mu-plugins helper.
-vvv_info "   > Double-checking client-mu-plugins"
-. "${PMC_PROVISION_PATH}/pmc/client-mu-plugins.sh"
 
 # Ensure VIP Go's pre-config requirements are loaded.
 vvv_info "   > Adding necessary modifications to wp-config.php"
