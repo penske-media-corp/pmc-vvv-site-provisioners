@@ -1,5 +1,10 @@
 # pmc-vvv-site-provisioners
 
+> ⚠️
+>
+> **This repository is deprecated.** PMC no longer supports VVV, but this
+> repository persists as a reference.
+
 Custom site provisioners for VVV
 
 These provisioners build on VVV's default provisioners to add PMC-specific
